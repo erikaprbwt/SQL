@@ -1,6 +1,5 @@
 # Database Schema
-Hello, this is my first project and I try to create a simple library database of the Faculty of Sains and Mathematics.
-5 tables have relationships, as shown in this figure:
+Hello, this is my first project. I try to create a simple library database of the Faculty of Sains and Mathematics consist of 5 tables that have some relationships, as shown in this figure:
 ![20211014_231555](https://user-images.githubusercontent.com/92423145/137362908-cfbcb1b4-4b5f-45ba-bfce-c998439042a7.jpg)
 
 # Statements Used
