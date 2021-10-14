@@ -1,0 +1,27 @@
+CREATE TABLE address
+(
+    id_address        	INT          NOT NULL AUTO_INCREMENT,
+    id_member		INT          NOT NULL,
+    country		VARCHAR(100) NOT NULL,
+    province		VARCHAR(100) NOT NULL,
+    postcode		VARCHAR(10)  NOT NULL,
+    PRIMARY KEY (id_address),
+    #making one to one relation between table "address" and "member"
+    UNIQUE KEY id_member_unique (id_member), 
+    FOREIGN KEY fk_address_member (id_member) REFERENCES member(id_member)	
+) 
+
+#syntax below can be performed after "address" table was formed 
+#adding column with condition in the table location
+ALTER TABLE address
+ADD COLUMN district VARCHAR(50) NOT NULL AFTER province;
+ADD COLUMN subdistrict VARCHAR(50) NOT NULL AFTER regency;
+
+#inserting value based on id_member
+INSERT INTO address(id_member, country, province, district, subdistrict, postcode) VALUES (1,'Indonesia','Central Java','Semarang','Tembalang',50275), 
+(2,'Indonesia','Central Java','Surakarta','Manahan',57139), (3,'Indonesia','Central Java','Sukoharjo','Sukoharjo',57512);
+
+#applying one to one relation using "select", "join", and "concat"
+SELECT CONCAT (member.first_name, ' ', member.last_name), address.district, address.subdistrict
+FROM address
+JOIN member ON (address.id_member = member.id_member);

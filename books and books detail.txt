@@ -1,0 +1,38 @@
+#creating books table
+CREATE TABLE books
+(
+    ISBN  		VARCHAR(20)  NOT NULL,
+    book_title		VARCHAR(100)  NOT NULL,
+    year_of_publication YEAR         NOT NULL DEFAULT 0,
+    PRIMARY KEY (ISBN)
+) 
+
+INSERT INTO books(ISBN, book_title, year_of_publication) VALUES ('978-602-4810-73-3','The Death of Expertise',2019),
+('978-059-3136-27-0','Under a White Sky',2021), ('978-623-5566-53-5','Yellow World',2021),('978-623-3064-14-9','Memory in Life',2021);
+
+#creating books detail table as a 'bridge' to books loan table in order to conducting many to many relationship
+CREATE TABLE books_detail
+(
+    ISBN  	VARCHAR(20)  NOT NULL,
+    id_loan   	VARCHAR(10)  NOT NULL,
+    PRIMARY KEY (ISBN, id_loan)
+) 
+
+#change the primary keys to foreign keys, so it won't causing errors like "Duplicate entry for key 'PRIMARY'"
+ALTER TABLE books_detail
+ADD CONSTRAINT fk_booksdetail_books
+FOREIGN KEY (ISBN) REFERENCES books(ISBN);
+
+ALTER TABLE books_detail
+ADD CONSTRAINT fk_booksdetail_booksloan
+FOREIGN KEY (id_loan) REFERENCES books_loan(id_loan);
+
+#book borrowing based  id_loan  
+INSERT INTO books_detail(ISBN,id_loan) VALUE ('978-602-4810-73-3','A202103'), ('978-059-3136-27-0','A202103'),
+('978-623-5566-53-5','A202105'), ('978-623-3064-14-9','A202105'),('978-623-5566-53-5','A202108'),('978-623-3064-14-9','A202108');
+
+#applying many to many relationship using "select" and "joins"
+#each tables (books and books loan) are connected bu books detail table
+SELECT * FROM books
+JOIN books_detail ON (books_detail.ISBN = books.ISBN)
+JOIN books_loan ON (books_loan.id_loan = books_detail.id_loan)

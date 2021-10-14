@@ -1,0 +1,33 @@
+CREATE TABLE books_loan
+(
+    id_loan   		VARCHAR(10)  NOT NULL,
+    id_member		INT          NOT NULL,
+    duration          	INT          NOT NULL,
+    PRIMARY KEY (id_loan)
+) 
+
+#syntax below can be performed after "books_loan" table was formed 
+#adding and renaming column
+ALTER TABLE books_loan
+ADD COLUMN date_issued DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+CHANGE COLUMN duration duration_in_days INT NOT NULL DEFAULT 1;
+
+#adding constraint to specifies that the key can onl contain values that are in the refereced primary key
+ADD CONSTRAINT fk_member_booksloan
+   FOREIGN KEY (id_member) REFERENCES member(id_member) 
+
+#inserting value based on id_member
+INSERT INTO books_loan(id_member,id_loan, duration_in_days) VALUES (1,'A202103',5), (2,'A202111',15), (3,'A202112',6), 
+INSERT INTO books_loan(id_member,id_loan, duration_in_days) VALUES (4,'A202105',5), (5,'A202108',15), (6,'A202107',6)
+
+#select data from member table/checking inputed data
+SELECT * FROM books_loan
+
+#updating data
+UPDATE books_loan SET duration_in_days = 15
+WHERE id_loan='A202105';
+
+#applying one to many relation using "select" and "join"
+SELECT books_loan.id_loan, books_loan.duration_in_days, member.first_name
+FROM books_loan
+JOIN member ON (member.id_member = books_loan.id_member)

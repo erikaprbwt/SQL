@@ -1,0 +1,28 @@
+#creatig database named "library"
+CREATE DATABASE library;
+
+#creating tables and its columns
+CREATE TABLE member(
+    id_member  INT(4)       NOT NULL AUTO_INCREMENT,
+    first_name VARCHAR(100) NOT NULL,
+    last_name  VARCHAR(100) NOT NULL, 
+    department VARCHAR(100) NOT NULL, 
+    faculty    VARCHAR(100) NOT NULL, 
+    PRIMARY KEY (id_member)
+) 
+
+#syntax below can be performed after "member" table was formed 
+#deleting column
+ALTER TABLE member DROP COLUMN faculty;
+
+#modifying data type
+ALTER TABLE member 
+MODIFY department ENUM('Statistics', 'Mathematics', 'Chemistry', 'Biology', 'Physics');
+
+#inserting value
+INSERT INTO member (first_name, last_name, department)
+VALUES ('Nana','Aryana','Statistics'),('Lala','Presley','Mathematics'),
+('Sasi','Hasan','Biology');
+
+#select data from member table
+SELECT * FROM member
